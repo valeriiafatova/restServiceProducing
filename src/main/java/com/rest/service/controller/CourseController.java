@@ -1,25 +1,23 @@
 package com.rest.service.controller;
 
 import com.rest.service.entity.Course;
+import com.rest.service.repository.CourseRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.annotation.Resource;
 
 @RestController
 public class CourseController {
 
-    private static List<Course> courses =
-            Arrays.asList(new Course(1L, "Web Services"), new Course(2L, "REST"), new Course(3L, "SOAP"),
-                    new Course(4L, "Java EE"));
+    @Resource
+    private CourseRepository courseRepository;
 
-    @GetMapping("/courses")
-    public Course getCourse(@RequestParam Long id) {
-        return courses.stream()
-                .filter(course -> course.getId().equals(id))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+
+    @GetMapping("/courses/{courseId}")
+    public ResponseEntity<Course> getCourse(@PathVariable Long courseId) {
+        return ResponseEntity.of(courseRepository.findCourseById(courseId));
     }
 }
