@@ -1,9 +1,14 @@
 package com.rest.service.entity;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "activity")
 public class Activity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -19,7 +24,6 @@ public class Activity {
     private boolean active;
 
     private boolean closed;
-
 
     public Activity() {
     }
