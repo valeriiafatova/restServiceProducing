@@ -3,21 +3,28 @@ package com.rest.service.controller;
 import com.rest.service.entity.Course;
 import com.rest.service.repository.CourseRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
+@RequestMapping("/courses")
 public class CourseController {
 
     @Resource
     private CourseRepository courseRepository;
 
 
-    @GetMapping("/courses/{courseId}")
-    public ResponseEntity<Course> getCourse(@PathVariable Long courseId) {
-        return ResponseEntity.of(courseRepository.findCourseById(courseId));
+    @GetMapping
+    public List<Course> getCourses(){
+        return courseRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> getCourse(@PathVariable Long id) {
+        return ResponseEntity.of(courseRepository.findCourseById(id));
+    }
+
+
 }

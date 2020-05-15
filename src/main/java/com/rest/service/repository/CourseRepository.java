@@ -18,4 +18,8 @@ public class CourseRepository {
                 .filter(course -> course.getId().equals(courseId))
                 .findFirst();
     }
+
+    public List<Course> findAll(){
+        return courses;
+    }
 }
